@@ -1,20 +1,15 @@
-
 import os
 
-# VULNERABILIDAD: credenciales expuestas
-DB_PASSWORD = "SuperSecretPassword123!"
+# CORRECCION (vulnerabilidad): la contraseña ya no esta escrita en el codigo,
+# se lee desde una variable de entorno.
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+
 
 def calcular_promedio(valores):
-    # CODE SMELL: falta de manejo de lista vacía
-    if len(valores) == 0:
+    """Regresa el promedio de una lista de numeros (0 si la lista esta vacia)."""
+    # CORRECCION (code smell): verificacion simple de lista vacia y uso de sum()
+    if not valores:
         return 0
+    return sum(valores) / len(valores)
 
-    suma = 0
-    for v in valores:
-        suma += v
-
-    return suma / len(valores)
-
-# CODE SMELL: código no utilizado
-def funcion_inutil():
-    pass
+# CORRECCION (code smell): se elimino la funcion sin uso funcion_inutil()
